@@ -1,0 +1,116 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <label>
+                <h1>Your Profile</h1>
+              </label>
+              <div class="profile_avatar">
+                <img src="images/avatar.png" height="80px" width="80px">
+                <button type="button" class="btn btn-danger"  ng-click="hscn_edit_click()">Edit</button>
+              </div>
+              
+              <hr>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <form >
+                <div class="basic_infomation">
+                  <h3>Basic Information</h3>
+                  <div class="form-group row">
+                    <label for="name" class="col-4 col-form-label" >Name</label>
+                    <div class="col-8">
+                      <input id="name" name="name" placeholder="Name" class="form-control here" required="required" type="text" ng-readonly="makeReadonly"  ng-model="hscn_user.account.fullname">
+                    </div>
+                  </div>
+                </div>
+                <div class="basic_infomation">
+                  <div class="form-group row">
+                    <label for="telephonenumber" class="col-4 col-form-label">Telephone Number</label>
+                    <div class="col-8">
+                      <input id="telephonenumber" name="telephonenumber" placeholder="Telephone Number" class="form-control here" required="required" type="text" ng-readonly="makeReadonly" ng-model="hscn_user.account.phone">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="email" class="col-4 col-form-label">Email</label>
+                    <div class="col-8">
+                      <input id="email" name="email" placeholder="Email" class="form-control here" type="text" ng-readonly="makeReadonly" ng-model="hscn_user.account.email">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="facebook" class="col-4 col-form-label">Facebook</label>
+                    <div class="col-8">
+                      <input id="facebook" name="facebook" placeholder="Facebook" class="form-control here" type="text" ng-readonly="makeReadonly" ng-model="hscn_user.facebook">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="nativeland" class="col-4 col-form-label">Native Land</label>
+                    <div class="col-8">
+                      <input id="nativeland" name="nativeland" placeholder="Native Land" class="form-control here" type="text" ng-readonly="makeReadonly" ng-model="hscn_user.nativeLand">
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="work_infomation">
+                  <h3>Work Information</h3>
+                  
+                  <div class="form-group row">
+                    <label for="skill" class="col-4 col-form-label">Skill</label>
+                    <div class="col-8">
+                      <input id="skill" name="skill" placeholder="Skill" class="form-control here" type="text" ng-readonly="makeReadonly" ng-model="hscn_user.skill">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="workexperence" class="col-4 col-form-label">Work Experence</label>
+                    <div class="col-8">
+                      <input id="workexperence" name="workexperence" placeholder="Work Experence" class="form-control here" type="text" ng-readonly="makeReadonly" ng-model="hscn_user.workExperience">
+                    </div>
+                  </div>
+                </div>
+                <div class="education_infomation">
+                  <h3>Education</h3>
+                  <div class="form-group row">
+                    <label for="university" class="col-4 col-form-label">University</label>
+                    <div class="col-8">
+                      <input id="university" name="university" placeholder="University" class="form-control here" required="required" type="text" ng-readonly="makeReadonly" ng-model="hscn_user.education">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                    <label for="specialized" class="col-4 col-form-label">Specialized</label>
+                    <div class="col-8">
+                      <input id="specialized" name="specialized" placeholder="Specialized" class="form-control here" required="required" type="text" ng-readonly="makeReadonly" ng-model="hscn_user.workExperience">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="graduationyear" class="col-4 col-form-label">Graduation year</label>
+                    <div class="col-8">
+                      <input id="graduationyear" name="graduationyear" placeholder="Graduation year" class="form-control here" type="text" ng-readonly="makeReadonly" ng-model="hscn_user.graduationYear">
+                    </div>
+                  </div>
+                  
+                  
+                  <div class="form-group row">
+                    <div class="offset-4 col-8">
+                      <button name="submit" type="submit" class="btn btn-primary" ng-hide="hscn_update" ng-click="hscn_update_click()">Update My Profile</button>
+                      <button name="reset" type="reset" class="btn btn-primary" ng-hide="hscn_reset" ng_click="hscn_reset_click()">Reset</button>
+                    </div>
+                  </div>
+                </div>
+                
+                
+              </form>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

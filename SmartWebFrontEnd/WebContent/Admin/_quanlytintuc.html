@@ -1,0 +1,224 @@
+<div class="container-fluid">
+    
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Quản Lý Tin Tức</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Admin</li>
+                    <li class="breadcrumb-item active">Quản Lý Tin Tức</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card-body">
+        <div class="row add">
+            <div class="col-2 form-inline">
+                <span>Show</span>
+                <select class="form-control" ng-model="show" ng-change="changeShow()">
+                    <option ng-value="10">10</option>
+                    <option ng-value="20">20</option>
+                    <option ng-value="50">50</option>
+                </select>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createPost" ng-click="resetCreate()">Thêm</button>
+                <button type="button" class="btn btn-primary" ng-click="duyetAll()">Duyệt</button>
+                <button type="button" class="btn btn-primary" ng-click="chanAll()">Chặn</button>
+                <button type="button" class="btn btn-primary" ng-click="deleteAll()">Xoá</button>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-4">
+                        <select class="form-control" ng-model="status">
+                            <option ng-value="">Lọc theo trạng thái</option>
+                            <option ng-value="false">Chưa duyệt</option>
+                            <option ng-value="true">Đã duyệt</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <select class="form-control" ng-model="categoryNews">
+                            <option ng-value="">Lọc theo danh mục</option>
+                            <option ng-repeat="c in listNewsCategory" ng-value="c.categoryNewsId">{{c.categoryName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control mr-sm-2" placeholder="Search" ng-model="keySearch">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-responsive-xl table-hover display ">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tiêu Đề</th>
+                    <th>Mô Tả</th>
+                    <th>Danh Mục</th>
+                    <th>Ngày Đăng</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành Động</th>
+                    <th><input type="checkbox" ng-model="checkAll" ng-change="checkedAll()"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="news in listNews | filter : {'title': keySearch} | filter : {'categoryNews' : {categoryNewsId : categoryNews}} | filter : {status : status}">
+                    <td>{{$index+1+((page-1)*show)}}</td>
+                    <td>{{news.title}}</td>
+                    <td>{{news.description}}</td>
+                    <td>{{news.categoryNews.categoryName}}</td>
+                    <td>{{news.dateSubmitted}}</td>
+                    <td ng-if="!news.status">Chặn</td>
+                    <td ng-if="news.status">Duyệt</td>
+                    <td>
+                        <button title="Duyệt" class="btn btn-success btn-sm mb-1" ng-if="!news.status" ng-click="duyet(news)">
+                            <i class="fa fa-check"></i>
+                        </button>
+                        <button title="Chặn"class="btn btn-danger btn-sm mb-1" ng-if="news.status" ng-click="chan(news)">
+                            <i class="fa fa-ban"></i>
+                        </button>
+                        <button title="Xem" class="btn btn-info btn-sm mb-1" data-toggle="modal" data-target="#updatePost" ng-click="view(news)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        <button title="Sửa" class="btn btn-info btn-sm mb-1" data-toggle="modal" data-target="#updatePost" ng-click="edit(news)">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm mb-1" title="Xóa" ng-click="deleteNews(news,$index)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                    <td><input type="checkbox" ng-model="news.checked" ng-change="checkedChange(news)"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="float-left">
+            Trang {{page}}/{{pageSize}}
+        </div>
+        <div class="float-right mb-1" ng-if="pageSize>1">
+            <button type="button" class="btn btn-primary mr-1" ng-repeat="x in [].constructor(pageSize) track by $index" ng-click="redirectPage($index+1)">{{$index+1}}</button>
+        </div>
+    </div>
+</div>
+<!-- Modal Create-->
+<div class="modal fade" id="createPost" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content container">
+      <div class="modal-header">
+        <h5 class="modal-title">Thêm Tin Tức</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" ng-form="formCreate">
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <label>Tiêu đề</label>
+                <input type="text" class="form-control" placeholder="Nhập tiêu đề" ng-model="newsCreate.title" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Danh mục</label>
+                <select class="form-control" ng-model="newsCreate.categoryNews" ng-options="category as category.categoryName for category in listNewsCategory" required>
+                    <option value="">Chọn danh mục</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Mô tả vắn tắt</label>
+            <input type="text" class="form-control" placeholder="Nhập mô tả" ng-model="newsCreate.description" required>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-7">
+                <label>Thumbnail</label>
+                <input type="file" class="form-control" accept="image/*" file-model="newsCreate.thumbnail" id="thumbnail">
+            </div>
+            <div class="form-group col-md-5">
+                <label>Hot</label>
+                <select class="form-control" ng-model="newsCreate.hot" required>
+                    <option value="">Chọn</option>
+                    <option ng-value="true">True</option>
+                    <option ng-value="false">False</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Nội dung</label>
+            <textarea name="editor1" id="editor1" rows="10" cols="80"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="createNews()" ng-disabled="formCreate.$invalid">Đăng tin</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// Replace the <textarea id="editor1"> with a CKEditor
+// instance, using default configuration.
+CKEDITOR.replace('editor1');
+</script>
+<!-- End Create-->
+
+<!-- Modal update & view-->
+<div class="modal fade" id="updatePost" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content container">
+      <div class="modal-header">
+        <h5 class="modal-title" ng-if="check">Cập Nhật Tin Tức</h5>
+        <h5 class="modal-title" ng-if="!check">Thông Tin Tin Tức</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" ng-form="formUpdate">
+        <input type="hidden" ng-model="news.newsID">
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                <label>Tiêu đề</label>
+                <input type="text" class="form-control" placeholder="Nhập tiêu đề" ng-model="news.title" required ng-disabled="!check">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Danh mục</label>
+                <select class="form-control" ng-model="news.categoryNews" ng-options="category as category.categoryName for category in listNewsCategory track by category.categoryNewsId" required ng-disabled="!check">
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Mô tả vắn tắt</label>
+            <input type="text" class="form-control" placeholder="Nhập mô tả" ng-model="news.description" required ng-disabled="!check">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-7">
+                <label>Thumbnail</label>
+                <img ng-src="http://localhost:8080/images/{{news.thumbnail}}" style="width: 50%;">
+                <input type="file" class="form-control" accept="image/*" file-model="newThumbnail" ng-disabled="!check" id="newThumbnail">
+            </div>
+            <div class="form-group col-md-5">
+                <label>Hot</label>
+                <select class="form-control" ng-model="news.hot" required ng-disabled="!check">
+                    <option ng-value="true">True</option>
+                    <option ng-value="false">False</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Nội dung</label>
+            <textarea id="editor2" rows="10" cols="80"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer" ng-show="check">
+        <button type="button" class="btn btn-primary" ng-click="updateNews()" ng-disabled="formUpdate.$invalid">Cập nhật tin</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="cancel()">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// Replace the <textarea id="editor1"> with a CKEditor
+// instance, using default configuration.
+CKEDITOR.replace('editor2');
+</script>
+<!-- End update & view-->

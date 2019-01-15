@@ -1,0 +1,83 @@
+<div ng-controller="settingController">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="breadcrumb-holder">
+                    <h1 class="main-title float-left">Setting</h1>
+                    <ol class="breadcrumb float-right">
+                        <li class="breadcrumb-item">Admin</li>
+                        <li class="breadcrumb-item active">Setting</li>
+                    </ol>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="card-body">
+            <form>
+                <div class="form-group row ">
+                    <label class="col-sm-2 col-form-label">Logo</label>
+                    <div class="card col-6">
+                        <div class="card-body">
+                            <input type="file" file-model="logo" ng-disabled="!check" accept="image/*">
+                        </div>
+                    </div>
+                     <div class="card col-4">
+                        <div class="card-body">
+                            <img width="80%" src="http://localhost:8080/images/{{allSetting.logo}}" alt="">
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="form-group row">
+                    <label  class="col-sm-2 col-form-label">Địa Chỉ</label>
+                    <div class="col-sm-10">
+                        <input ng-model="allSetting.address" type="text" class="form-control" placeholder="Địa Chỉ" ng-disabled="!check" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">SĐT</label>
+                    <div class="col-sm-10">
+                        <input ng-model="allSetting.phone" type="text" class="form-control" placeholder="SĐT" ng-disabled="!check" required>
+                    </div>
+                </div>
+                
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"> Link Facebook</label>
+                    <div class="col-sm-10">
+                        <input ng-model="allSetting.facebook" type="text" class="form-control" placeholder="Facebook" ng-disabled="!check">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Link Twitter</label>
+                    <div class="col-sm-10">
+                        <input ng-model="allSetting.twitter" type="text" class="form-control" placeholder="Twitter" ng-disabled="!check" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Header</label>
+                    <div class="col-sm-10">
+                        <input ng-model="allSetting.header" type="text" class="form-control" placeholder="Header" ng-disabled="!check" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Footer</label>
+                    <div class="col-sm-10">
+                        <input ng-model="allSetting.footer" type="text" class="form-control" placeholder="Footer" ng-disabled="!check" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Link Video</label>
+                    <div class="col-sm-10">
+                        <input ng-model="allSetting.video" type="text" class="form-control" placeholder="Video" ng-disabled="!check" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm float-right" ng-show="check" ng-click="cancel()">Hủy</button>
+                <button type="submit" class="btn btn-primary btn-sm float-right" ng-show="check" ng-click="confirmUpdate()">Cập nhập</button>
+                <button type="submit" class="btn btn-primary btn-sm float-right" ng-show="!check" ng-click="update()">Sửa thông tin</button>
+            </form>
+        </div>
+    </div>
+</div>

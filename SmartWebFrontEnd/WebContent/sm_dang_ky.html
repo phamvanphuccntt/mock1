@@ -1,0 +1,78 @@
+<div ng-controller="registerController" >
+   <div class= "img-top">
+      <img src="images/img-top.jpg">
+   </div>
+   <div class="title-top">
+      Trang chủ / Đăng ký
+   </div>
+   <div class="row">
+      <div class="col-md-9 col-sm-9 col-xs-12 sign-up">
+         <div >
+            <center>
+            <div class="main-login main-center mt-5">
+               
+               <form class="form-horizontal" ng-submit = "dangkytaikhoan()" >
+                  
+                  <div class="form-group">
+                     <label for="name" class="cols-sm-2 control-label">Your Name</label>
+                     <div class="cols-sm-10">
+                        <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                           <input required type="text" class="form-control" ng-model ="NameSign" name="name" id="name"  placeholder="Enter your Name"/>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                     <div class="cols-sm-10">
+                        <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                           <input type="text" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$"  required class="form-control" ng-model ="emailSign" name="email" id="email"  placeholder="Enter your Email"/>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="username" class="cols-sm-2 control-label">Username</label>
+                     <div class="cols-sm-10">
+                        <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                           <input ng-model ="usernameSign" required type="text" class="form-control" name="username" id="username"  placeholder="Enter your Username"/>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="phone" class="cols-sm-2 control-label">Phone</label>
+                     <div class="cols-sm-10">
+                        <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                           <input ng-model = "phoneSign" required type="text" pattern="0[0-9s.-]{9,13}" class="form-control" name="phone" id="phone"  placeholder="Enter your Phone"/>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group ">
+                     <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Sign Up</button>
+                  </div>
+                  <div class="login-register">
+                     <a href="#!login">Login</a>
+                  </div>
+               </form>
+            </div>
+            </center>
+         </div>
+      </div>
+      <div class="col-md-3 col-sm-3 col-xs-12 right-column">
+         <div class="video-right">
+            <iframe width="290" height="240" src="https://www.youtube.com/embed/yqQFTYVJUs8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+         </div>
+         <div class="contact-right">
+            <p style="padding: 10px"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp&nbspTòa soạn: Tầng 3, Tòa nhà 3A, 82 Duy Tân, Quận Cầu Giấy, Hà Nội</p>
+            <p style="padding: 10px"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp&nbspHotline: 0968331987 </p>
+            <p style="padding: 10px"><i class="fa fa-envelope" aria-hidden="true"></i>&nbsp&nbspEmail: toasoan@ictnews.vn</p>
+            <p style="padding: 10px"> <i class="fa fa-facebook-official" aria-hidden="true"></i>&nbsp&nbspfacebook.com</p>
+         </div>
+         <div class="fanpage-right">
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fitsol.vn%2F&tabs=timeline&width=290&height=240&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="290" height="240" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+         </div>
+      </div>
+   </div>
+</div>

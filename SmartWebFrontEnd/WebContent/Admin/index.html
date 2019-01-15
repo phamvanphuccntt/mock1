@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <title>Admin</title>
+        
+        <!-- Bootstrap CSS -->
+        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!-- BEGIN CSS for this page -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"/>
+        <!-- END CSS for this page -->
+        
+        <!-- Font Awesome CSS -->
+        <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        
+        <!-- Custom CSS -->
+        <link href="css/admin-styles.css" rel="stylesheet" type="text/css" />
+        <link href="css/styles.css" rel="stylesheet" type="text/css" />
+        <script src="ckeditor/ckeditor.js"></script>
+        
+    </head>
+    <body ng-app="adminApp" ng-controller="indexController">
+        <div id="main">
+            <!-- top bar navigation -->
+            <div class="headerbar">
+                <!-- LOGO -->
+                <div class="headerbar-left">
+                    <a href="../" class="logo"><img alt="Logo" src="images/logo.png" /> <span>Admin</span></a>
+                </div>
+                <nav class="navbar-custom">
+                    <ul class="list-inline float-right mb-0">
+                        <li class="list-inline-item dropdown notif">
+                            <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" role="button" aria-haspopup="false" aria-expanded="false">
+                                <img src="images/avata.jpg" alt="Profile image" class="avatar-rounded">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                <!-- item-->
+                                <div class="dropdown-item noti-title">
+                                    <h5 class="text-overflow"><small>Hello, {{currentUser.fullname}}</small> </h5>
+                                </div>
+                                <!-- item-->
+                                <a href="#!" style="color: black;" class="dropdown-item notify-item">
+                                    <i class="fa fa-user"></i> <span>Profile</span>
+                                </a>
+                                <!-- item-->
+                                <button class="dropdown-item notify-item" data-toggle="modal" data-target="#changepassword">
+                                <i class="fa fa-external-link"></i> <span>Đổi mật khẩu</span>
+                                </button>
+                                <!-- item-->
+                                <button class="dropdown-item notify-item" ng-click="logout()">
+                                <i class="fa fa-power-off"></i> <span>Đăng xuất</span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="list-inline menu-left mb-0">
+                        <li class="float-left">
+                            <button class="button-menu-mobile open-left">
+                            <i class="fa fa-fw fa-bars"></i>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <!-- End Navigation -->
+            
+            
+            <!-- Left Sidebar -->
+            <div class="left main-sidebar">
+                
+                <div class="sidebar-inner leftscroll">
+                    <div id="sidebar-menu">
+                        
+                        <ul>
+                            <li class="submenu" ng-show="currentUser.role=='MARKETING' || currentUser.role=='MANAGER'">
+                                <a href="#!quan-ly-tin-tuc"><i class="fa fa-edit"></i><span> Quản Lý Tin Tức </span> </a>
+                            </li>
+                            
+                            <li class="submenu" ng-show="currentUser.role=='HR' || currentUser.role=='MANAGER'">
+                                <a href="#!quan-ly-cong-viec"><i class="fa fa-suitcase"></i><span> Quản Lý Công Việc </span> </a>
+                            </li>
+                            
+                            <li class="submenu" ng-show="currentUser.role=='MANAGER'">
+                                <a href="#!quan-ly-tai-khoan"><i class="fa fa-group"></i> <span> Quản Lý Tài Khoản </span> </a>
+                            </li>
+                            <li class="submenu" ng-show="currentUser.role=='HR' || currentUser.role=='MANAGER'">
+                                <a href="#!quan-ly-ho-so-ung-tuyen"><i class="fa fa-handshake-o"></i><span> Quản Lý Hồ Sơ Ứng Tuyển </span> </a>
+                            </li>
+                            
+                            <li class="submenu" ng-show="currentUser.role=='MARKETING' || currentUser.role=='MANAGER'">
+                                <a href="#!quan-ly-slide"><i class="fa fa-object-group"></i> <span> Quản Lý Slide </span> </a>
+                            </li>
+                            <li class="submenu">
+                                <a><i class="fa fa-sitemap"></i> <span>  Quản Lý Danh Mục </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled" ng-show="currentUser.role=='MARKETING' || currentUser.role=='MANAGER' || currentUser.role=='HR'">
+                                    <li ng-show="currentUser.role=='MARKETING' || currentUser.role=='MANAGER'"><a href="#!quan-ly-danh-muc-tin-tuc"> Danh Mục Tin Tức</a></li>
+                                    <li ng-show="currentUser.role=='HR' || currentUser.role=='MANAGER'"><a href="#!quan-ly-danh-muc-cong-viec">Danh Mục Công Việc</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu" ng-show="currentUser.role=='MANAGER'">
+                                <a href="#!setting"><i class="fa fa-cogs "></i> <span> Setting</span> </a>
+                                
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!-- End Sidebar -->
+            <div class="content-page">
+                
+                <!-- Start content -->
+                <div class="content" ng-view>
+                    <!-- NỘI DUNG TRANG WEB-->
+                    
+                    <!-- KẾT THÚC NỘI DUNG TRANG WEB-->
+                </div>
+                <!-- END content -->
+            </div>
+            <!-- END content-page -->
+            
+            <footer class="footer">
+                <span class="text-right">
+                    Copyright 2018
+                </span>
+                <span class="float-right">
+                    Powered by <a  href="#"><b>Team One</b></a>
+                </span>
+            </footer>
+            <!--  POPUP CHANGE PASSWORD -->
+            <div class="modal fade" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Đổi Mật Khẩu</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" ng-form="form">
+                                <div class="form-group">
+                                    <label>Mật Khẩu Cũ</label>
+                                    <input type="password" class="form-control" placeholder="Nhập mật khẩu cũ" ng-model="oldPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Mật Khẩu Mới</label>
+                                    <input type="password" class="form-control"placeholder="Nhập mật khẩu mới" ng-model="newPassword" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nhập Lại Mật Khẩu</label>
+                                    <input type="password" class="form-control" placeholder="Nhập lại mật khẩu mới" ng-model="reNewPassword" required>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" ng-click="changePassword()" ng-disabled="!form.$valid">Đổi mật khẩu</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END POPUP CHANPASS WORD -->
+        </div>
+        <!-- END main -->
+        <script src="js/jquery.min.js"></script>
+        
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- App js -->
+        <script src="js/pikeadmin.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+        <!-- CUSTOM JS -->
+        <script src="js/admin.js"></script>
+        <script src="js/jstuankhai.js" ></script>
+        <script src="js/truong.js"></script>
+        
+    </body>
+</html>

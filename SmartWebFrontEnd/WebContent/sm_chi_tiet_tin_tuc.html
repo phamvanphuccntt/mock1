@@ -1,0 +1,102 @@
+<div class="img-top">
+	<img src="images/img-top.jpg">
+</div>
+
+<div class="title-top">Trang chủ / Chi tiết tin tức / {{news[0].title}}</div>
+<div class="row">
+	<div class="col-md-9 col-sm-9 col-xs-12">
+
+		<div class="short-des">
+			<p style="text-align: justify;">{{news[0].description}}</p>
+		</div>
+		<div class="img-chitiet">
+			<img src="http://localhost:8080/images/{{news[0].thumbnail}}">
+		</div>
+		<div class="content-detail">
+			
+
+			<p>{{news[0].content}}</p>
+			<p style="text-align: right;">Ngày đăng: {{news[0].dateSubmitted}}</p>
+			<p style="text-align: right;">Tác giả: {{news[0].account.fullname}}</p>
+		</div>
+		<div class="clear"></div>
+		<h2 style="margin-left: 30px;">TIN LIÊN QUAN</h2>
+		<div class="news-list">
+			<ul>
+				<li>
+					<div class="row">
+						<div class="col-md-4 col-sm-4 col-xs-12 img-news">
+							<a href=""> <img src="http://localhost:8080/images/{{news[0].thumbnail}}">
+							</a>
+						</div>
+						<div class="col-md-8 col-sm-8 col-xs-12 img-news">
+							<h4>
+								<b>Hướng dẫn lập trình viên làm việc theo nhóm hiệu quả</b>
+							</h4>
+							<p>Một trong những câu hỏi phổ biến mà hầu hết các nhà tuyển
+								dụng lập trình viên đó là khả năng làm việc nhóm.Nó quan trọng
+								bời vì hầu hết sự nghiệp của bạn với tư cách là một lập trình
+								viên sẽ được làm việc với những người</p>
+
+							<div class="view-detail">
+								<a href="detail-news.html">Xem chi tiết ></a>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li>
+					<div class="row">
+						<div class="col-md-4 col-sm-4 col-xs-12 img-news">
+							<a href=""> <img src="images/news/news-1.png">
+							</a>
+						</div>
+						<div class="col-md-8 col-sm-8 col-xs-12 img-news">
+							<h4>
+								<b>Hướng dẫn lập trình viên làm việc theo nhóm hiệu quả</b>
+							</h4>
+							<p>Một trong những câu hỏi phổ biến mà hầu hết các nhà tuyển
+								dụng lập trình viên đó là khả năng làm việc nhóm.Nó quan trọng
+								bời vì hầu hết sự nghiệp của bạn với tư cách là một lập trình
+								viên sẽ được làm việc với những người</p>
+
+							<div class="view-detail">
+								<a href="detail-news.html">Xem chi tiết ></a>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="col-md-3 col-sm-3 col-xs-12">
+		<div class="video-right">
+			<iframe width="290" height="240"
+				src="https://www.youtube.com/embed/yqQFTYVJUs8" frameborder="0"
+				allow="autoplay; encrypted-media" allowfullscreen></iframe>
+		</div>
+		<div class="contact-right">
+			<p style="padding: 10px">
+				<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp&nbspTòa
+				soạn: Tầng 3, Tòa nhà 3A, 82 Duy Tân, Quận Cầu Giấy, Hà Nội
+			</p>
+			<p style="padding: 10px">
+				<i class="fa fa-phone" aria-hidden="true"></i>&nbsp&nbspHotline:
+				0968331987
+			</p>
+			<p style="padding: 10px">
+				<i class="fa fa-envelope" aria-hidden="true"></i>&nbsp&nbspEmail:
+				toasoan@ictnews.vn
+			</p>
+			<p style="padding: 10px">
+				<i class="fa fa-facebook-official" aria-hidden="true"></i>&nbsp&nbspfacebook.com
+			</p>
+		</div>
+		<div class="fanpage-right">
+			<iframe
+				src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fitsol.vn%2F&tabs=timeline&width=290&height=240&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+				width="290" height="240" style="border: none; overflow: hidden"
+				scrolling="no" frameborder="0" allowTransparency="true"
+				allow="encrypted-media"></iframe>
+		</div>
+	</div>
+</div>

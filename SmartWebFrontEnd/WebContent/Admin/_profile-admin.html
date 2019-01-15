@@ -1,0 +1,28 @@
+<h3 class="text-center">Thông Tin Cá Nhân</h3>
+<div class="profileadmin col-10 m-auto border border-success rounded"  ng-controller="adminController">
+    <form class="m-2">
+        <div class="form-group ">
+            <label>Username:</label>
+            <input type="text" class="form-control" ng-model="account.username" ng-disabled="true">
+        </div>
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email" class="form-control" ng-model="account.email" ng-disabled="!check" required>
+        </div>
+        <div class="form-group">
+            <label>Role:</label>
+            <input type="text" class="form-control" ng-model="account.role" ng-disabled="true">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Full name:</label>
+            <input type="text" class="form-control" ng-model="account.fullname" ng-disabled="!check" required>
+        </div>
+        <div class="form-group">
+            <label>SĐT:</label>
+            <input type="text" class="form-control" ng-model="account.phone" ng-disabled="!check" required pattern="[0-9]{10,11}">
+        </div>
+        <button class="btn btn-primary btn-sm" ng-show="!check" ng-click="update()">Sửa thông tin</button>
+        <button class="btn btn-primary btn-sm" ng-show="check" ng-click="confirmUpdate()">Cập Nhập</button>
+        <button class="btn btn-primary btn-sm" ng-show="check" ng-click="cancel()">Hủy</button>
+    </form>
+</div>

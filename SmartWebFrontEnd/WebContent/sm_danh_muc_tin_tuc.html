@@ -1,0 +1,80 @@
+
+<div class="img-top">
+	<img src="images/img-top.jpg">
+</div>
+<div class="title-top">Trang chủ / Danh sách tin tức</div>
+<div class="row">
+	<div class="col-md-9 col-sm-9 col-xs-12 ">
+
+		<div class="news-list">
+
+
+			<ul>
+				<li ng-repeat="ds in newsList" >
+					<div class="row">
+						<div class="col-md-4 col-sm-4 col-xs-12 img-news">
+							<a href=""> <img src="http://localhost:8080/images/{{ds.thumbnail}}">
+							</a>
+						</div>
+						<div class="col-md-8 col-sm-8 col-xs-12 ">
+							<h4>
+								<b>{{ds.title}}</b>
+							</h4>
+							<p>{{ds.description}}</p>
+
+							<div class="view-detail">
+								<a href="#!/chi-tiet-tin-tuc/{{ds.newsID}}">Xem chi tiết ></a>
+							</div>
+						</div>
+					</div>
+				</li>
+				
+			</ul>
+			<div class="text-center m-2" ng-if="pageSize>1">
+				            <button type="button" class="btn btn-primary mr-1" ng-repeat="x in [].constructor(pageSize) track by $index" ng-click="redirectPage($index+1)">{{$index+1}}</button>
+				        </div>	
+		</div>
+	</div>
+	<div class="col-md-3 col-sm-3 col-xs-12 ">
+		<div class="video-right">
+			<iframe width="290" height="240"
+				src="https://www.youtube.com/embed/yqQFTYVJUs8" frameborder="0"
+				allow="autoplay; encrypted-media" allowfullscreen></iframe>
+		</div>
+		<div class="contact-right">
+			<p style="padding: 10px">
+				<i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp&nbspTòa
+				soạn: Tầng 3, Tòa nhà 3A, 82 Duy Tân, Quận Cầu Giấy, Hà Nội
+			</p>
+			<p style="padding: 10px">
+				<i class="fa fa-phone" aria-hidden="true"></i>&nbsp&nbspHotline:
+				0968331987
+			</p>
+			<p style="padding: 10px">
+				<i class="fa fa-envelope" aria-hidden="true"></i>&nbsp&nbspEmail:
+				toasoan@ictnews.vn
+			</p>
+			<p style="padding: 10px">
+				<i class="fa fa-facebook-official" aria-hidden="true"></i>&nbsp&nbspfacebook.com
+			</p>
+		</div>
+		<div class="fanpage-right">
+			<iframe
+				src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fitsol.vn%2F&tabs=timeline&width=290&height=240&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+				width="290" height="240" style="border: none; overflow: hidden"
+				scrolling="no" frameborder="0" allowTransparency="true"
+				allow="encrypted-media"></iframe>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<!-- <div class="text-center">
+	<ul class="pagination justify-content-center">
+		<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+		<li class="page-item  active"><a class="page-link" href="#">1</a></li>
+		<li class="page-item"><a class="page-link" href="#">2</a></li>
+		<li class="page-item"><a class="page-link" href="#">3</a></li>
+		<li class="page-item"><a class="page-link" href="#">Next</a></li>
+	</ul>
+</div>
+ -->

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!-- This file has been downloaded from Bootsnipp.com. Enjoy! -->
+    <title>Filterable Table - Bootsnipp.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="table_status">
+        
+        <div class="list_title">
+          <h2>List of application dossier</h2>
+        </div>
+        <div class="input_status">
+          <input id="myInput" type="text" placeholder="Search..">
+        </div>
+        
+        <br><br>
+        <table>
+          <thead >
+            <tr >
+              <th style="text-align: center;">Numerical Order</th>
+              <th style="text-align: center;">Name of Work</th>
+              <th style="text-align: center;">Position Apply</th>
+              <th style="text-align: center;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="myTable">
+            <tr>
+              <td class="td_1"></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        
+        
+      </div>
+    </div>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+    });
+    });
+    </script>
+  </body>
+</html>

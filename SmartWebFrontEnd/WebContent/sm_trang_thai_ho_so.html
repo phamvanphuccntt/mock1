@@ -1,0 +1,50 @@
+<div class="table_status">
+  
+  <div class="list_title">
+    <h2>List of application dossier</h2>
+  </div>
+  <div class="input_status">
+    <input id="myInput" type="text" placeholder="Search with Job Name ..." ng-model="search">
+  </div>
+  
+  <br><br>
+  <table class="tths">
+    <thead >
+      <tr >
+        <th style="text-align: center;">Numerical Order</th>
+        <th style="text-align: center;">Name of Work</th>
+        <th style="text-align: center;">Position Apply</th>
+        <th style="text-align: center;">Status</th>
+      </tr>
+    </thead>
+    <tbody id="myTable" >
+      
+        <tr dir-paginate=" detailJob in detailJobs | filter : search  | itemsPerPage: 5" current-page ="1" pagination-id="detailJobPagination">
+
+        <td class="td_1">{{$index+1}}</td>
+        <td>{{detailJob.jobDetail.jobName}}</td>
+        <td>{{detailJob.jobDetail.jobRequest}}</td>
+        <td ng-show="detailJob.jobDetail.status">Duyệt</td>
+        
+      </tr>
+    </tbody>
+  </table>
+  <ul class="pagination" style="padding-left: 970px">
+  <li class="page-item"><a class="page-link">Previous</a></li>
+  <li class="page-item"><a class="page-link">1</a></li>
+  <li class="page-item"><a class="page-link">2</a></li>
+  <li class="page-item"><a class="page-link">3</a></li>
+  <li class="page-item"><a class="page-link">Next</a></li>
+</ul>
+  <!-- template-url="dirPagination.tpl.html" -->
+  <!-- <dir-pagination-controls 
+  boundary-links="true" 
+  pagination-id="detailJobPagination" 
+  on-page-change="pageChangeHandler(newPageNumber)" 
+  >
+  </dir-pagination-controls> -->
+
+  <br></br>
+  
+</div>
+

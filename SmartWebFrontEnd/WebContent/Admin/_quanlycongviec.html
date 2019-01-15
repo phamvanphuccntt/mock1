@@ -1,0 +1,303 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Quản lý công việc</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Admin</li>
+                    <li class="breadcrumb-item active">Quản lý công việc</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card-body">
+        <div class="row add">
+            <div class="col-2 form-inline">
+                <span>Show</span>
+                <select class="form-control" ng-model="show" ng-change="changeShow()">
+                    <option ng-value="10">10</option>
+                    <option ng-value="20">20</option>
+                    <option ng-value="50">50</option>
+                </select>
+            </div>
+            <div class="col-4">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createJob" ng-click="resetCreate()">Thêm</button>
+                <button type="button" class="btn btn-primary" ng-click="duyetAll()">Duyệt</button>
+                <button type="button" class="btn btn-primary" ng-click="chanAll()">Chặn</button>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-4">
+                        <select class="form-control" ng-model="status">
+                            <option ng-value="">Lọc theo trạng thái</option>
+                            <option ng-value="false">Chưa duyệt</option>
+                            <option ng-value="true">Đã duyệt</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <select class="form-control" ng-model="categoryJob">
+                            <option ng-value="">Lọc theo danh mục</option>
+                            <option ng-repeat="c in listJobCategory" ng-value="c.categoryJobId">{{c.categoryName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control mr-sm-2" placeholder="Search" ng-model="keySearch">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-responsive-xl table-hover display">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên công việc</th>
+                    <th>Mô Tả</th>
+                    <th>Mức Lương</th>
+                    <th>Nơi Làm Việc</th>
+                    <th>Hình Thức</th>
+                    <th>Ngày Đăng</th>
+                    <th>Ngày Hết Hạn</th>
+                    <th>Trạng thái</th>
+                    <th>Hành Động</th>
+                    <th><input type="checkbox" ng-model="checkAll" ng-change="checkedAll()"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="job in listJob | filter : {'jobName': keySearch} | filter : {'categoryJob' : {categoryJobId : categoryJob}} | filter : {status : status}">
+                    <td>{{$index+1+((page-1)*show)}}</td>
+                    <td>{{job.jobName}}</td>
+                    <td>{{job.description}}</td>
+                    <td>{{job.salary}}</td>
+                    <td>{{job.city.cityName}}</td>
+                    <td>{{job.workingForm}}</td>
+                    <td>{{job.dateSubmitted}}</td>
+                    <td>{{job.expirationDate}}</td>
+                    <td ng-if="!job.status">Chặn</td>
+                    <td ng-if="job.status">Duyệt</td>
+                    <td>
+                        <button class="btn btn-danger btn-sm mb-1" title="Chặn" ng-click="an(job)" ng-if="job.status">
+                            <i class="fa fa-ban"></i>
+                        </button>
+                        <button class="btn btn-success btn-sm mb-1" title="Duyệt" ng-click="hien(job)" ng-if="!job.status">
+                            <i class="fa fa-check"></i>
+                        </button>
+                        <button class="btn btn-primary btn-sm mb-1" title="Xem" data-toggle="modal" data-target="#updateJob" ng-click="view(job)">
+                            <i class="fa fa-eye"></i>
+                        </button>
+                        <button class="btn btn-primary btn-sm mb-1" title="Sửa" data-toggle="modal" data-target="#updateJob" ng-click="edit(job)">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        <!-- <button class="btn btn-danger btn-sm mb-1" title="Xóa" ng-click="deleteJob(job,$index)">
+                            <i class="fa fa-trash"></i>
+                        </button> -->
+                    </td>
+                    <td><input type="checkbox" ng-model="job.checked" ng-change="checkedChange(job)"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="float-left">
+            Trang {{page}}/{{pageSize}}
+        </div>
+        <div class="float-right mb-1" ng-if="pageSize>1">
+            <button type="button" class="btn btn-primary mr-1" ng-repeat="x in [].constructor(pageSize) track by $index" ng-click="redirectPage($index+1)">{{$index+1}}</button>
+        </div>
+    </div>
+</div>
+<!-- Modal Create-->
+<div class="modal fade" id="createJob" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content container">
+      <div class="modal-header">
+        <h5 class="modal-title">Thêm Công Việc</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" ng-form="formCreate">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Tên công việc</label>
+                <input type="text" class="form-control" placeholder="Nhập tên công việc" ng-model="newJob.jobName" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Danh mục</label>
+                <select class="form-control" ng-model="newJob.categoryJob" ng-options="category as category.categoryName for category in listJobCategory" required>
+                    <option value="">Chọn danh mục</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Hình thức làm việc</label>
+                <select class="form-control" ng-model="newJob.workingForm" required>
+                    <option value="">Chọn hình thức</option>
+                    <option value="FULL_TIME">Full time</option>
+                    <option value="PART_TIME">Part time</option>
+                    <option value="FREE_TIME">Free time</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Mô tả vắn tắt</label>
+            <input type="text" class="form-control" placeholder="Nhập mô tả" ng-model="newJob.description" required>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Thumbnail</label>
+                <input type="file" class="form-control" accept="image/*" file-model="newJob.thumbnail" id="thumbnail">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Hot</label>
+                <select class="form-control" ng-model="newJob.hot" required>
+                    <option value="">Chọn</option>
+                    <option ng-value="true">True</option>
+                    <option ng-value="false">False</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Ngày hết hạn</label>
+                <input type="text" class="form-control" ng-model="newJob.expirationDate" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}" required placeholder="dd/MM/yyyy">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Địa chỉ</label>
+                <input type="text" class="form-control" ng-model="newJob.address" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Thành phố</label>
+                <select class="form-control" ng-model="newJob.city" ng-options="city as city.cityName for city in listCity" required>
+                    <option value="">Chọn thành phố</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Lương</label>
+                <input type="text" class="form-control" ng-model="newJob.salary" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Yêu cầu công việc</label>
+            <textarea id="editor1" rows="10" cols="80"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Chi tiết công việc</label>
+            <textarea id="editor2" rows="10" cols="80"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Quyền lợi</label>
+            <textarea id="editor3" rows="10" cols="80"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="createJob()" ng-disabled="formCreate.$invalid">Thêm</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// Replace the <textarea id="editor1"> with a CKEditor
+// instance, using default configuration.
+CKEDITOR.replace('editor1');
+CKEDITOR.replace('editor2');
+CKEDITOR.replace('editor3');
+</script>
+<!-- End Create-->
+<!-- Modal update & view-->
+<div class="modal fade" id="updateJob" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content container">
+      <div class="modal-header">
+        <h5 class="modal-title" ng-if="check">Cập Nhật Công Việc</h5>
+        <h5 class="modal-title" ng-if="!check">Thông Tin Công Việc</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" ng-form="updateModal">
+        <input type="hidden" ng-model="job.jobId">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Tên công việc</label>
+                <input type="text" class="form-control" placeholder="Nhập tên công việc" ng-model="job.jobName" ng-disabled="!check" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputState">Danh mục</label>
+                <select class="form-control" ng-disabled="!check" ng-model="job.categoryJob" ng-options="category as category.categoryName for category in listJobCategory track by category.categoryJobId" required>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Hình thức làm việc</label>
+                <select class="form-control" ng-disabled="!check" ng-model="job.workingForm">
+                    <option value="FULL_TIME">Full time</option>
+                    <option value="PART_TIME">Part time</option>
+                    <option value="FREE_TIME">Free time</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Mô tả vắn tắt</label>
+            <input type="text" class="form-control" placeholder="Nhập mô tả" ng-disabled="!check" ng-model="job.description" required>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Thumbnail</label>
+                <img ng-src="http://localhost:8080/images/{{job.thumbnail}}" style="width: 50%;">
+                <input type="file" class="form-control" ng-disabled="!check" accept="image/*" file-model="newThumbnail" id="newThumbnail">
+            </div>
+            <div class="form-group col-md-4">
+                <label>Hot</label>
+                <select class="form-control" ng-disabled="!check" ng-model="job.hot">
+                    <option ng-value="true">True</option>
+                    <option ng-value="false">False</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Ngày hết hạn</label>
+                <input type="text" class="form-control" ng-model="job.expirationDate" ng-disabled="!check" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}" required  placeholder="dd/MM/yyyy">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label>Địa chỉ</label>
+                <input type="text" class="form-control" ng-model="job.address" ng-disabled="!check" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Thành phố</label>
+                <select class="form-control" ng-disabled="!check" ng-model="job.city" ng-options="city as city.cityName for city in listCity track by city.cityId" required>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label>Lương</label>
+                <input type="text" class="form-control" ng-model="job.salary" ng-disabled="!check" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Yêu cầu công việc</label>
+            <textarea id="editor4" rows="10" cols="80"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Chi tiết công việc</label>
+            <textarea id="editor5" rows="10" cols="80"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Quyền lợi</label>
+            <textarea id="editor6" rows="10" cols="80"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer" ng-show="check">
+        <button type="submit" class="btn btn-primary" ng-disabled="updateModal.$invalid" ng-click="updateJob()">Cập nhật</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" ng-click="cancel()">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+// Replace the <textarea id="editor1"> with a CKEditor
+// instance, using default configuration.
+CKEDITOR.replace('editor4');
+CKEDITOR.replace('editor5');
+CKEDITOR.replace('editor6');
+</script>
+<!-- End update & view-->

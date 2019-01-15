@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+	<session-factory>
+
+		<!-- Database connection settings -->
+		<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+		<property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:mysystem</property>
+		<property name="hibernate.connection.username">smartweb</property>
+		<property name="hibernate.connection.password">123456</property>
+		<!-- SQL dialect -->
+		<property name="dialect">org.hibernate.dialect.Oracle10gDialect</property>
+		<!-- insert UTF-8 -->
+		<property name="hibernate.connection.useUnicode">true</property>
+		<property name="hibernate.connection.characterEncoding">UTF-8</property>
+		<property name="hibernate.connection.charSet">UTF-8</property>
+		<!-- Mapping file -->
+		<mapping class="com.itsol.model.Account" />
+		<mapping class="com.itsol.model.Slider" />
+		<mapping class="com.itsol.model.ApplyProfile" />
+		<mapping class="com.itsol.model.CategoryJob" />
+		<mapping class="com.itsol.model.JobDetail" />
+		<mapping class="com.itsol.model.CategoryNews" />
+		<mapping class="com.itsol.model.NewsDetail" />
+		<mapping class="com.itsol.model.City" />
+		<mapping class="com.itsol.model.User" />
+		<mapping class="com.itsol.model.Setting" />
+	</session-factory>
+</hibernate-configuration>

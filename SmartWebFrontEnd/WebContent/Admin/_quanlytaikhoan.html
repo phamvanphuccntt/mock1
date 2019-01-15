@@ -1,0 +1,251 @@
+<h4 class="text-center mt-2">Quản Lý Tài Khoản</h3>
+<div ng-controller="accountController">
+    <div class="container-fluid" >
+        <div class="card-body">
+            <div class="row add">
+                <div class="col-3 form-inline ">
+                    <select ng-model="show" ng-change="showAmuont(show)" class="form-control">
+                        <option ng-value="8">8</option>
+                        <option ng-value="20">20</option>
+                        <option ng-value="50">50</option>
+                        <option ng-value="100">100</option>
+                    </select>
+                </div>
+                <div class="col-3 form-inline ">
+                    <select class="form-control" ng-model="locRole" >
+                        <option value="">-- Lọc Quyền --</option>
+                        <option value="">ALL</option>
+                        <option value="CANDIDATE">CANDIDATE</option>
+                        <option value="HR">HR</option>
+                        <option value="MARKETING">MARKETING</option>
+                        <option value="MANAGER">MANAGER</option>
+                        
+                    </select>
+                </div>
+                <div class="col-3 form-inline ">
+                    <select class="form-control" ng-model="locStatus" >
+                        <option ng-value="">-- Lọc Trạng Thái --</option>
+                        <option ng-value="">All</option>
+                        <option ng-value="false">Chưa Kích Hoạt</option>
+                        <option ng-value="true">Kích Hoạt</option>
+                        
+                    </select>
+                </div>
+                <div class="col-3  form-inline">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" ng-model="keySearch">
+                </div>
+            </div>
+            <table id="example1" class="table table-bordered table-responsive-xl table-hover display ">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th >Username</th>
+                        <th>Email</th>
+                        <th>Full Name</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Role</th>
+                        <th>Created Time</th>
+                        <th>Last Access</th>
+                        <th>Hành Động</th>
+                        
+                    </tr>
+                </thead>
+                <tbody ng-repeat="y in allaccount | filter : {'username': keySearch} | filter : {'status': locStatus} | filter : {'role': locRole}">
+                    <tr>
+                        <td>{{$index+1}}</td>
+                        <td>{{y.username}}</td>
+                        <td>{{y.email}}</td>
+                        <td>{{y.fullname}}</td>
+                        <td>{{y.phone}}</td>
+                        <td ng-if="y.status == true">Đã Kích Hoạt</td>
+                        <td ng-if="y.status == false">Chưa kích hoạt</td>
+                        <td>{{y.role}}</td>
+                        <td>{{y.dateCreated}}</td>
+                        <td>{{y.lastAccess}}</td>
+                        <td>
+                            <button  class="btn btn-outline-success btn-sm"data-toggle="modal" data-target=".bd-example-modal-lg" ng-click="edittaikhoan(y);">
+                            <i class="  fa fa-pencil" style="font-size:20px;color:black"></i>
+                            </button>
+                            <button  class="btn btn-outline-success btn-sm" data-toggle="modal" data-target=".bd-example-modal-lg" data-toggle="tooltip" " ng-click="xemtaikhoan(y);" data-placement="top" title="Xem">
+                            <i class="fa fa-eye" style="font-size:20px;color:black"></i>
+                            </button>
+                            <button  class="btn btn-outline-success btn-sm" ng-click="xoataikhoan(y,$index);">
+                            <i class="  fa fa-remove" style="font-size:20px;color:red"></i>
+                            </button>
+                            <button  ng-if="y.status == 0" class="btn btn-outline-success btn-sm"  data-toggle="tooltip" data-placement="top" title="Kích Hoạt"  ng-click="active(y)">Active</button>
+                            <button  ng-if="y.status == 1" class="btn btn-outline-danger btn-sm" ng-click="disactive(y)" data-toggle="tooltip" data-placement="top" title="Hủy Kích Hoạt">Deactive</button>
+                            
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+            
+            <div class="row float-right " >
+                <button class="btn btn-sm btn-success mr-1" data-toggle="modal" data-target="#popupdangky" >Thêm</button>
+            </div>
+            <div class="row float-left" ng-if="countPage>1">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span
+                                class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li ng-repeat="x in [].constructor(countPage) track by $index" class="page-item"><a  ng-click="redirectPage($index+1)"  class="page-link">{{$index+1}}</a></li>
+                        <li class="page-item">
+                            <a class="page-link"  aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- BẮT ĐẦU POPUP ĐĂNG KÝ TÀI KHOẢN -->
+    <div class="modal fade" id="popupdangky" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm Tài Khoản</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" ng-submit="themtaikhoan()">
+                        <div class="form-group">
+                            <label for="username" class="cols-sm-2 control-label">Username</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                                    <input  ng-model="newuser" type="text" class="form-control" name="username" required  id="username"  placeholder="Enter your Username"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="address" class="cols-sm-2 control-label">Mật Khẩu</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                                    <input type="password" ng-model="newpassword" required class="form-control" name="address" id="address"  placeholder="Enter your address"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="cols-sm-2 control-label">Full Name</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                                    <input type="text" class="form-control" ng-model="newfullname" required name="name" id="name"  placeholder="Enter your Name"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="cols-sm-2 control-label">Your Email</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                                    <input type="email" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$" required class="form-control" ng-model="newemail" name="email" id="email"  placeholder="Enter your Email"/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="cols-sm-2 control-label">Phone</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone" aria-hidden="true"></i></span>&nbsp;&nbsp;
+                                    <input type="text" pattern="0[0-9s.-]{9,13}"  class="form-control" required name="phone" ng-model="newphone" id="phone"  placeholder="Enter your Phone"/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group col-md-4">
+                            <label for="inputState">Role</label>
+                            <select required="" ng-model="newrole" class="form-control">
+                                <option  value="">Chọn Quyền</option>
+                                <option  value="CANDIDATE">CANDIDATE</option>
+                                <option value="HR">HR</option>
+                                <option value="MARKETING">MAKETING</option>
+                                <option value="MANAGER">MANAGER</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" >Thêm</button>
+                        <button type="submit" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- BẮT ĐẦU XEM SỬA THÔNG TIN TÀI KHOẢN -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <h5 class="text-center mt-2">Chỉnh Sủa Tài Khoản</h4>
+                <form class="m-5" ng-submit="updateacount();">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="inputEmail4">Email</label>
+                            <input type="text" class="form-control" ng-readonly="checkedit" id="inputEmail4" ng-model="y.email" placeholder="Email" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Full Name</label>
+                        <input type="text" class="form-control" ng-readonly="checkedit" id="inputAddress"  ng-model="y.fullname" placeholder="Nguyễn Văn A">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress2">Phone</label>
+                        <input type="text" class="form-control" ng-readonly="checkedit" ng-model="y.phone" id="inputAddress2" placeholder="Phone">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="inputCity">Last Access</label>
+                            <input type="text"  ng-model="y.lastAccess" ng-readonly="checkedit" class="form-control" id="inputCity">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputState">Role</label>
+                            <select ng-disabled="checkedit" ng-model="y.role" class="form-control">
+                                <option value="MANAGER">MANAGER</option>
+                                <option value="HR">HR</option>
+                                <option value="MARKETING">MARKETING</option>
+                                <option value="CANDIDATE">CANDIDATE</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputState">Trạng Thái</label>
+                            <select ng-disabled="checkedit" id="inputState" ng-model="y.status" class="form-control">
+                                <option ng-value="true">Đã kịch hoạt</option>
+                                <option ng-value="false">Chưa kích hoạt</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="inputZip">Ngày Tạo</label>
+                            <input type="text"  ng-model="y.dateCreated" ng-readonly="checkedit" class="form-control" id="inputZip">
+                        </div>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="inputAddress">Ghi Chú</label>
+                        <input type="text"  ng-model="y.notes" ng-readonly="checkedit" class="form-control" placeholder="Nguyễn Văn A">
+                    </div>
+                    
+                    <button type="submit" ng-hide="checkedit" class="btn btn-primary">Submit</button>
+                    <button type="submit"   data-dismiss="modal" class="btn btn-primary">Bỏ Qua</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- KẾT THÚC XEM, SỬA THÔNG TIN TÀI KHOẢN -->
+</div>
+<!-- KẾT THÚC POPUP ĐĂNG KÝ TÀI KHOẢN -->

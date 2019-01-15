@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Home</title>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+	crossorigin="anonymous">
+
+</head>
+<body ng-app="homeApp" ng-controller="indexController">
+	<header id="header" class="text-white">
+		<div class="navbar bg-dark">
+			<div class="container">
+				<div class="">
+					<i class="fas fa-envelope"></i> &nbsp <i class="fas fa-mobile-alt"></i>
+					&nbsp <i class="fab fa-facebook-f"></i> &nbsp <i
+						class="fab fa-google"></i>
+				</div>
+				<p class="text-center text">Welcome to SmartWeb Company</p>
+				<div ng-show="!check">
+					<a href="#!login" class="text-white">
+				  Đăng nhập / 
+				</a>
+				<a href="#!signup" class="text-white">
+				  Đăng ký
+				</a>
+				</div>
+					<div class="dropdown show" ng-show="check && !checkAdmin">
+						<a class="" role="button" id="dropdownMenuLink"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Xin chào: {{account.fullname}} <i class="fas fa-caret-down"></i>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+							<a class="dropdown-item" href="#!ho-so-ca-nhan">Hồ sơ cá nhân</a>
+							<a class="dropdown-item" href="#!trang-thai-ho-so">Trạng thái hồ sơ cá nhân</a>  
+							<a class="dropdown-item" data-toggle="modal" data-target="#changepassword">Đổi mật khẩu</a> 
+							<a class="dropdown-item" ng-click="logout()">Đăng xuất</a>
+						</div>
+					</div>
+					<a class="text-light" href="Admin" ng-show="checkAdmin && check">Admin</a>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- /header -->
+	<nav class="navbar navbar-expand-lg ">
+     <div class="container">
+     	 <a class="navbar-brand mr-auto mr-lg-0" href="#">
+     	 	<img src="" alt="">
+     	 </a>
+      <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav">
+         
+            <img src="http://localhost:8080/images/{{setting.logo}}"  height="50"> 
+         
+          <li class="nav-item ">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Về chúng tôi</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Dịch vụ</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Tin tức</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" ng-repeat="nCate in newsCategory" href="#!/tin-tuc/{{nCate.categoryNewsId}}">{{nCate.categoryName}}</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#!job">Tuyển dụng</a>
+          </li>
+        </ul>
+      </div>
+     </div>
+    </nav>
+	<div ng-view>
+		<!-- NOI DUNG TRANG WEB -->
+	</div>
+	<footer class="bg-dark text-white pt-4">
+		<div class="container">
+			<div class="row">
+				<div class="col-6">
+					<h5 class="">{{setting.companyName}}</h5>
+					<p>
+						<i class="fas fa-map-marker"></i> &nbsp {{setting.address}}
+					</p>
+					<p>
+						<i class="fas fa-mobile-alt"></i> &nbsp {{setting.phone}}
+					</p>
+					<p>
+						<i class="fab  fa-facebook"></i> &nbsp <i
+							class="fab fa-google-plus-g"></i> &nbsp <i
+							class="fab  fa-twitter"></i> &nbsp <i
+							class="fab  fa-twitter-square"></i>
+					</p>
+				</div>
+				<div class="col-6">
+					<h5></h5>
+					<p>Chi Nhánh TP Hồ Chí Minh</p>
+					<p><i class="fas fa-map-marker"></i> &nbsp {{setting.address}}</p>
+					<p><i class="fas fa-mobile-alt"></i> &nbsp {{setting.phone}}:</p>
+					
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row" style="background-color: #000;">
+				<p class="pt-3" style="margin-left: auto; margin-right: auto; margin-bottom: 1%;">Copyright</p>
+			</div>
+		</div>
+
+	</footer>
+
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script>
+		window.jQuery
+				|| document
+						.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+	</script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+	<script src="js/holder.min.js"></script>
+	<!-- ANGULAR JS -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+	<!-- CUSTOM JS -->
+	<script src="js/home.js"></script>
+	<script src="js/truong.js"></script>
+	<script src="js/khai.js"></script>
+	<script src="js/phucpv.js"></script>
+
+	
+</body>
+</html>
+<!--  POPUP CHANGE PASSWORD -->
+<div class="modal fade text-dark" id="changepassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalCenterTitle">Đổi Mật Khẩu</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div ng-form="form">
+					<div class="form-group">
+						<label>Mật Khẩu Cũ</label>
+						<input type="password" class="form-control" placeholder="Nhập mật khẩu cũ" ng-model="oldPassword" required>
+					</div>
+					<div class="form-group">
+						<label>Mật Khẩu Mới</label>
+						<input type="password" class="form-control"placeholder="Nhập mật khẩu mới" ng-model="newPassword" required>
+					</div>
+					<div class="form-group">
+						<label>Nhập Lại Mật Khẩu</label>
+						<input type="password" class="form-control" placeholder="Nhập lại mật khẩu mới" ng-model="reNewPassword" required>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" ng-click="changePassword()" ng-disabled="!form.$valid">Đổi mật khẩu</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END POPUP CHANPASS WORD -->

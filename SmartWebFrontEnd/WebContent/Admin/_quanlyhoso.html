@@ -1,0 +1,84 @@
+<div class="container-fluid">
+    
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Quản lý hồ sơ ứng tuyển</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Admin</li>
+                    <li class="breadcrumb-item active">Quản lý hồ sơ ứng tuyển</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card-body">
+        <div class="row add">
+            <div class="col-4 form-inline">
+                <span>Show</span>
+                <select class="form-control" ng-model="show" ng-change="changeShow()">
+                    <option ng-value="10">10</option>
+                    <option ng-value="20">20</option>
+                    <option ng-value="50">50</option>
+                </select>
+            </div>
+            <div class="col-8 float-right">
+                <div class="row">
+                    <div class="col-4">
+                        <select class="form-control" ng-model="status">
+                            <option ng-value="">Lọc theo trạng thái</option>
+                            <option ng-value="false">Chưa duyệt</option>
+                            <option ng-value="true">Đã duyệt</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <select class="form-control" ng-model="categoryJob">
+                            <option ng-value="">Lọc theo danh mục</option>
+                            <option ng-repeat="c in listJobCategory" ng-value="c.categoryJobId">{{c.categoryName}}</option>
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm theo vị trí" ng-model="keySearch">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-responsive-xl table-hover display">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên ứng viên</th>
+                    <th>Vị trí</th>
+                    <th>Email</th>
+                    <th>Số Điện Thoại</th>
+                    <th>CV</th>
+                    <th>Nội dung ứng tuyển</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="apply in listApply | filter : {'status': status} | filter : {jobDetail : {jobName: keySearch}} | filter : {jobDetail : {categoryJob : {categoryJobId : categoryJob}}}">
+                    <td>{{$index+1+((page-1)*show)}}</td>
+                    <td>{{apply.account.fullname}}</td>
+                    <td>{{apply.jobDetail.jobName}}</td>
+                    <td>{{apply.account.email}}</td>
+                    <td>{{apply.account.phone}}</td>
+                    <td><a class="btn btn-light btn-sm" href="http://localhost:8080/cv/{{apply.cv}}">Download</a></td>
+                    <td>{{apply.notes}}</td>
+                    <td ng-if="!apply.status">Chưa duyệt</td>
+                    <td ng-if="apply.status">Đã duyệt</td>
+                    <td><button class="btn btn-success btn-sm" ng-click="duyet(apply)" ng-if="!apply.status">Duyệt</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="float-left">
+            Trang {{page}}/{{pageSize}}
+        </div>
+        <div class="float-right mb-1" ng-if="pageSize>1">
+            <button type="button" class="btn btn-primary mr-1" ng-repeat="x in [].constructor(pageSize) track by $index" ng-click="redirectPage($index+1)">{{$index+1}}</button>
+        </div>
+    </div>
+</div>

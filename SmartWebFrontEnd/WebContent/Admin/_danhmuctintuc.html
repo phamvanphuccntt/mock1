@@ -1,0 +1,75 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="breadcrumb-holder">
+                <h1 class="main-title float-left">Quản Lý Danh Mục Tin Tức</h1>
+                <ol class="breadcrumb float-right">
+                    <li class="breadcrumb-item">Admin</li>
+                    <li class="breadcrumb-item active">Quản Lý Danh Mục Tin Tức</li>
+                </ol>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="card-body">
+        <div class="row add">
+            <div class="col-8">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNewsCategory" ng-click="create()">Thêm</button>
+            </div>
+            <div class="col-4">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" ng-model="keySearch">
+            </div>
+        </div>
+        <table id="example1" class="table table-bordered table-responsive-xl table-hover display">
+            <thead>
+                <tr>
+                    <th>Tên Danh Mục</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="news in listNewsCategory | filter : {'categoryName': keySearch}">
+                    <td>{{news.categoryName}}</td>
+                    <td ng-if="news.status">Hiện</td>
+                    <td ng-if="!news.status">Ẩn</td>
+                    <td>
+                        <button class="btn btn-success" ng-if="!news.status" ng-click="hien(news)">Hiện</button>
+                        <button class="btn btn-success" ng-if="news.status" ng-click="an(news)">Ẩn</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#createNewsCategory" ng-click="update(news)">Sửa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Modal Create-->
+<div class="modal fade" id="createNewsCategory" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" ng-if="checkModal=='create'">Thêm danh mục tin tức</h5>
+        <h5 class="modal-title" ng-if="checkModal=='update'">Cập nhật danh mục tin tức</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group" ng-form ="modalCreate">
+            <label>Tên danh mục</label>
+            <input type="text" class="form-control" placeholder="Nhập tên danh mục" ng-model="news.categoryName" required>
+            <input type="hidden" ng-model="news.categoryNewsId">
+            <input type="hidden" ng-model="news.status">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" ng-click="confirmCreate()" ng-disabled="!modalCreate.$valid" ng-if="checkModal=='create'">Thêm</button>
+        <button type="button" class="btn btn-primary" ng-click="confirmUpdate()" ng-disabled="!modalCreate.$valid" ng-if="checkModal=='update'">Cập nhật</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Create-->

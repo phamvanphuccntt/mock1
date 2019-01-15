@@ -1,0 +1,115 @@
+<section>
+		<div class="bg-title">
+			<div class="container">
+				<p class="text-warning pt-4">Cơ hội nghề nghiệp</p>
+				<h2 class="text-gray-dark py-0">Việc Làm IT - Tuyển Dụng Nhân Sự CNTT</h2>
+				<p class="py-4"><button type="" class="btn btn-warning">Các vị trí hiện tại <i class="fas fa-chevron-right"></i></button></p>
+			</div>
+		</div>
+
+		<div class="container" >
+			<div class="row">
+				<div class="col-8">
+					<div class="container" >
+						<h5 class="pb-4 text-warning">{{job[0].jobName}}</h5>	
+						<h6 class="pt-4 text-warning">Yêu cầu</h6>
+						<div class="row" >
+						{{job[0].jobRequest}}
+							
+						</div>
+						<h6 class="pt-4 text-warning">Chi tiết công việc</h6>
+						<div class="row">
+							{{job[0].content}}
+						</div>
+						<h6 class="pt-4 text-warning">Quyền lợi</h6>
+						<div class="row">
+							{{job[0].interest}}
+						</div>
+					</div>
+					<div class="container">
+						<h4 class="text-center pt-5">NỘP ĐƠN ỨNG TUYỂN</h4>
+						<div class="row">
+							<div class="form-group col-12">
+								<h6 class="modal-title pb-2">Họ & tên bạn *</h6>
+							    <input type="text" class="form-control" placeholder="Họ & tên" value="{{account.fullname}}" required="required">
+							  </div>
+						</div>
+						<div class="row">
+							<div class="form-group col-12">
+								<h6 class="modal-title pb-2">Địa chỉ email *</h6>
+							    <input type="text" class="form-control" placeholder="Địa chỉ email" value="{{account.email}}" required>
+							  </div>
+						</div>
+						<div class="row">
+							<div class="form-group col-12">
+								<h6 class="modal-title pb-2">Số điện thoại *</h6>
+							    <input type="text" class="form-control" placeholder="Số điện thoại" value="{{account.phone}}" required>
+							  </div>
+						</div>
+						<div class="row">
+							<div class="form-group col-12">
+								<h6 class="modal-title pb-2">CV của bạn *</h6>
+							    <input type="file" file-model="cv"  class="form-control" placeholder="Họ & tên" required>
+							  </div>
+						</div>
+						<div class="row">
+							<div class="form-group col-12">
+								<h6 class="modal-title pb-2">Ghi chú</h6>
+								<textarea class="form-control" placeholder="Ghi chú" ng-model="notes"></textarea>
+							    
+							  </div>
+						</div>
+						<div class="row">
+							<div class="form-group col-12">
+								<button type="" class="btn btn-success form-control" ng-click="applyProfile()">Nộp đơn ứng tuyển</button>
+							  </div>
+						</div>
+					</div>
+				</div>
+				<div class="col-4">
+						<div class="job-detail mb-5">
+							<div class="pt-3 infor-job">
+								<h6>Hình thức:</h6>
+								<p>{{job[0].workingForm}}</p>
+							</div>
+							<div class="pt-3 infor-job">
+								<h6>Lương</h6>
+								<p>{{job[0].salary}}</p>
+							</div>
+							<div class="pt-3 infor-job">
+								<h6>Địa điểm</h6>
+								<p>{{job[0].address}}</p>
+							</div>
+							<div class="pt-3 pl-4">
+								<h6>Hạn nộp hồ sơ</h6>
+								<p/>{{job[0].expirationDate}}</p>
+							</div>
+						</div>
+						<div class="job-detail mb-5 bg-white">
+							<h6 class="text-center pt-3">Chia sẻ lên mạng xã hội</h6>
+							<div class="text-center py-3">
+								<button class="btn btn-group btn-primary">Facebook</button>
+								<button class="btn btn-group btn-danger">Google +</button>
+							</div>
+						</div>
+						<div class="job-detail mb-5 bg-white">
+							<div class="pt-3 infor-job">
+								<h5>Tin liên quan</h5>
+							</div>
+							<div class="pt-3 infor-job"  ng-repeat="y in jobHot">
+								<h6>{{y.jobName}}</h6>
+								<p>Ngày hết hạn: {{y.expirationDate}}</p>
+							</div>
+						</div>
+						<div class="job-detail mb-5 bg-white">
+							<iframe
+								src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fitsol.vn%2F&tabs=timeline&width=290&height=240&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+								width="290" height="240" style="border: none; overflow: hidden"
+								scrolling="no" frameborder="0" allowTransparency="true"
+								allow="encrypted-media"></iframe>
+						</div>
+					
+				</div>
+			</div>
+		</div>
+	</section>

@@ -1,0 +1,85 @@
+<div ng-controller="slideController">
+    <div class="container-fluid">
+        
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="breadcrumb-holder">
+                    <h1 class="main-title float-left">Quản lý slider</h1>
+                    <ol class="breadcrumb float-right">
+                        <li class="breadcrumb-item">Admin</li>
+                        <li class="breadcrumb-item active">Quản lý slider</li>
+                    </ol>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="card-body">
+            <table id="quanlyslider" class="table table-bordered table-responsive-xl table-hover display">
+                <thead>
+                    <tr>
+                        <th>Hình Ảnh</th>
+                        <th>Link</th>
+                        <th>Vị Trí</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody  >
+                    <tr ng-repeat="x in slider">
+                        <td><img width="80%" height="150" src="http://localhost:8080/imagesSlider/{{x.image}}"></td>
+                        <td>{{x.link}}</td>
+                        <td>{{x.rank}}</td>
+                        <td><button class="btn btn-success" data-toggle="modal" data-target="#popupEdit" ng-click="suaslider(x)">Sửa</button></td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- START POPUP EDIT SLIDER -->
+    <div class="modal fade" id="popupEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Chỉnh Sửa Slider</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="needs-validation" ng-submit="updateSlider();">
+                        
+                        
+                        <div class="form-row">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputCity">Hình Ảnh</label>
+                                    <input required type="file" accept="image/*" file-model="x.image" class="form-control" >
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label >Link</label>
+                                    <input type="text"class="form-control" ng-model="x.link">
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label >Vị Trí</label>
+                                    <select  ng-model ="x.rank" class="form-control ">
+                                        <option ng-value="1">1</option>
+                                        <option ng-value="2">2</option>
+                                        <option ng-value="3">3</option>
+                                        <option ng-value="4">4</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" ">Save changes</button>
+                            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END POPUP EDIT SLIDER -->
+    </div>
